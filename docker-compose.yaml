@@ -1,0 +1,27 @@
+version: "3"
+services:
+        mysql:
+            image: mariadb
+            ports:
+                - '3260:3260'
+            volumes:
+                - ./dbdata:/var/lib/mysql
+            environment:
+                - MYSQL_ROOT_PASSWORD=Welcome123
+            restart: always
+
+   
+        wordpress:
+            image: wordpress
+            ports:
+                - '8000:80'
+            volumes:
+                - ./wordpress:/var/www/html
+            environment:
+                - WORDPRESS_DB_NAME=wpdb
+                - WORDPRESS_TABLE_PREFIX=wp_
+                - WORDPRESS_DB_HOST=mysql
+                - WORDPRESS_DB_PASSWORD=Welcome123
+            links:
+                - mysql
+            restart: always      
